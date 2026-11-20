@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Лабораторная работа №6: основы JavaScript, пять интерактивных заданий">
+  <title>Лабораторная №6 — Основы JavaScript</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div>
+        <div class="brand">БИЯБЕВА АНАСТАСИЯ АЛЕКСЕЕВНА</div>
+        <div class="meta">Группа 251-361 · Лабораторная работа №6</div>
+      </div>
+      <div class="header-mark">JS / 06</div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="intro">
+      <span class="eyebrow">HTML + JAVASCRIPT</span>
+      <h1>Основы JavaScript</h1>
+      <p>Пять функций: введите данные и нажмите «Вычислить». Результат появится без перезагрузки страницы.</p>
+    </div>
+
+    <div class="task-grid">
+      <section class="card" aria-labelledby="pow-title">
+        <div class="card-head"><span class="number">01</span><h2 id="pow-title">Возведение в степень</h2></div>
+        <p class="description">Функция <code>pow(x, n)</code> умножает число x на себя n раз, не используя встроенный оператор степени.</p>
+        <form id="pow-form" novalidate>
+          <div class="fields two">
+            <label>Число x <input id="pow-x" name="x" type="text" inputmode="numeric" value="2" required></label>
+            <label>Степень n <input id="pow-n" name="n" type="text" inputmode="numeric" value="5" required></label>
+          </div>
+          <button type="submit">Вычислить</button>
+        </form>
+        <div id="pow-result" class="result" role="status" aria-live="polite">Результат появится здесь</div>
+      </section>
+
+      <section class="card" aria-labelledby="gcd-title">
+        <div class="card-head"><span class="number">02</span><h2 id="gcd-title">Наибольший общий делитель</h2></div>
+        <p class="description">Функция <code>gcd(a, b)</code> находит НОД двух неотрицательных целых чисел с помощью алгоритма Евклида.</p>
+        <form id="gcd-form" novalidate>
+          <div class="fields two">
+            <label>Число a <input id="gcd-a" name="a" type="text" inputmode="numeric" value="48" required></label>
+            <label>Число b <input id="gcd-b" name="b" type="text" inputmode="numeric" value="18" required></label>
+          </div>
+          <button type="submit">Вычислить</button>
+        </form>
+        <div id="gcd-result" class="result" role="status" aria-live="polite">Результат появится здесь</div>
+      </section>
+
+      <section class="card" aria-labelledby="min-title">
+        <div class="card-head"><span class="number">03</span><h2 id="min-title">Наименьшая цифра</h2></div>
+        <p class="description">Функция <code>minDigit(x)</code> перебирает цифры неотрицательного целого числа и находит минимальную.</p>
+        <form id="min-form" novalidate>
+          <div class="fields">
+            <label>Число x <input id="min-x" name="x" type="text" inputmode="numeric" value="58326" required></label>
+          </div>
+          <button type="submit">Найти цифру</button>
+        </form>
+        <div id="min-result" class="result" role="status" aria-live="polite">Результат появится здесь</div>
+      </section>
+
+      <section class="card" aria-labelledby="plural-title">
+        <div class="card-head"><span class="number">04</span><h2 id="plural-title">Склонение слова «запись»</h2></div>
+        <p class="description">Функция <code>pluralizeRecords(n)</code> правильно согласует слова с количеством найденных записей.</p>
+        <form id="plural-form" novalidate>
+          <div class="fields">
+            <label>Количество записей n <input id="plural-n" name="n" type="text" inputmode="numeric" value="21" required></label>
+          </div>
+          <button type="submit">Сформировать фразу</button>
+        </form>
+        <div id="plural-result" class="result" role="status" aria-live="polite">Результат появится здесь</div>
+      </section>
+
+      <section class="card card-wide" aria-labelledby="fibb-title">
+        <div class="card-head"><span class="number">05</span><h2 id="fibb-title">Числа Фибоначчи</h2></div>
+        <p class="description">Функция <code>fibb(n)</code> возвращает n-е число последовательности. Поддерживает значения от 0 до 1000 без потери точности благодаря <code>BigInt</code>.</p>
+        <form id="fibb-form" novalidate>
+          <div class="fields">
+            <label>Номер n (от 0 до 1000) <input id="fibb-n" name="n" type="text" inputmode="numeric" value="10" required></label>
+          </div>
+          <button type="submit">Вычислить</button>
+        </form>
+        <div id="fibb-result" class="result break-words" role="status" aria-live="polite">Результат появится здесь</div>
+      </section>
+    </div>
+    <footer>Московский Политех · Прикладная информатика · 2026</footer>
+  </main>
+
+  <script>
+    'use strict';
+
+    // Задание 1: степень с натуральным показателем. Встроенный оператор ** не используется.
+    function pow(x, n) {
+      let result = 1n;
+      for (let i = 0; i < n; i++) {
+        result *= x;
+      }
+      return result;
+    }
+
+    // Задание 2: алгоритм Евклида для неотрицательных целых чисел.
+    function gcd(a, b) {
+      while (b !== 0n) {
+        const remainder = a % b;
+        a = b;
+        b = remainder;
+      }
+      return a; // По принятому в этой работе соглашению gcd(0, 0) = 0.
+    }
+
+    // Задание 3: минимум среди цифр числа.
+    function minDigit(x) {
+      const digits = x.toString().split('').map(Number);
+      let minimum = 9;
+      for (const digit of digits) {
+        if (digit < minimum) minimum = digit;
+      }
+      return minimum;
+    }
+
+    // Задание 4: согласование числительного с существительным и сказуемым.
+    function pluralizeRecords(n) {
+      const lastTwo = n % 100n;
+      const lastOne = n % 10n;
+      let verb;
+      let noun;
+      if (lastTwo >= 11n && lastTwo <= 14n) {
+        verb = 'было найдено';
+        noun = 'записей';
+      } else if (lastOne === 1n) {
+        verb = 'была найдена';
+        noun = 'запись';
+      } else if (lastOne >= 2n && lastOne <= 4n) {
+        verb = 'были найдены';
+        noun = 'записи';
+      } else {
+        verb = 'было найдено';
+        noun = 'записей';
+      }
+      return `В результате выполнения запроса ${verb} ${n} ${noun}`;
+    }
+
+    // Задание 5: последовательность Фибоначчи; BigInt сохраняет точность при n = 1000.
+    // Принято F(0) = 0, F(1) = 1.
+    function fibb(n) {
+      let previous = 0n;
+      let current = 1n;
+      for (let i = 0; i < n; i++) {
+        const next = previous + current;
+        previous = current;
+        current = next;
+      }
+      return previous;
+    }
+
+    // Проверка чисел: вводим только целые неотрицательные значения.
+    function readUnsignedInteger(id, label, minimum = 0n, maximum = null) {
+      const raw = document.getElementById(id).value.trim();
+      if (!/^\d+$/.test(raw)) {
+        throw new Error(`${label}: введите целое неотрицательное число.`);
+      }
+      const value = BigInt(raw);
+      if (value < minimum || (maximum !== null && value > maximum)) {
+        if (maximum !== null) throw new Error(`${label}: число должно быть от ${minimum} до ${maximum}.`);
+        throw new Error(`${label}: число должно быть не меньше ${minimum}.`);
+      }
+      return value;
+    }
+
+    function readSignedInteger(id, label) {
+      const raw = document.getElementById(id).value.trim();
+      if (!/^[+-]?\d+$/.test(raw)) {
+        throw new Error(`${label}: введите целое число.`);
+      }
+      return BigInt(raw);
+    }
+
+    // Общее подключение событий: перехват submit и вывод результата в DOM.
+    function setupForm(formId, resultId, calculate) {
+      document.getElementById(formId).addEventListener('submit', function (event) {
+        event.preventDefault();
+        const output = document.getElementById(resultId);
+        try {
+          output.textContent = calculate();
+          output.classList.remove('error');
+          output.classList.add('success');
+        } catch (error) {
+          output.textContent = error.message;
+          output.classList.remove('success');
+          output.classList.add('error');
+        }
+      });
+    }
+
+    setupForm('pow-form', 'pow-result', function () {
+      const x = readSignedInteger('pow-x', 'Число x');
+      const n = readUnsignedInteger('pow-n', 'Степень n', 1n, 1000n);
+      // Показатель ограничен 1000, чтобы не перегружать браузер.
+      return `${x} в степени ${n} = ${pow(x, Number(n))}`;
+    });
+
+    setupForm('gcd-form', 'gcd-result', function () {
+      const a = readUnsignedInteger('gcd-a', 'Число a');
+      const b = readUnsignedInteger('gcd-b', 'Число b');
+      return `НОД(${a}, ${b}) = ${gcd(a, b)}`;
+    });
+
+    setupForm('min-form', 'min-result', function () {
+      const x = readUnsignedInteger('min-x', 'Число x');
+      return `Наименьшая цифра числа ${x} — ${minDigit(x)}`;
+    });
+
+    setupForm('plural-form', 'plural-result', function () {
+      const n = readUnsignedInteger('plural-n', 'Количество записей');
+      return pluralizeRecords(n);
+    });
+
+    setupForm('fibb-form', 'fibb-result', function () {
+      const n = readUnsignedInteger('fibb-n', 'Номер n', 0n, 1000n);
+      return `F(${n}) = ${fibb(Number(n))}`;
+    });
+  </script>
+</body>
+</html>
